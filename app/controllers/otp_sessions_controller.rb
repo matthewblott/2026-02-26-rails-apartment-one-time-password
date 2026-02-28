@@ -29,12 +29,6 @@ class OtpSessionsController < ApplicationController
     email = session[:email]
     user = User.find_by(email: email, otp_enabled: true)
 
-    # unless otp.verify(params[:otp_code], drift_behind: 30)
-    #   flash.now[:alert] = "Invalid or expired code."
-    #   @email = email
-    #   render :verify, status: :unprocessable_entity and return
-    # end
-
     if user&.valid_otp?(params[:otp_code])
       new_session = user.sessions.create!
       session.delete(:email)
