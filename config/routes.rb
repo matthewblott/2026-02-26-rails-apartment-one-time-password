@@ -12,10 +12,11 @@ Rails.application.routes.draw do
       patch  'todos/:id',      action: :update,           as: 'todo_update'
       delete 'todos/:id',      action: :destroy,          as: 'todo_destroy'
     end
-  end
 
-  controller :static_pages do
-    get 'about',   action: :about
+    controller :settings do
+      get "settings", action: :show, as: "settings"
+    end
+
   end
 
   controller :sessions do
@@ -23,5 +24,29 @@ Rails.application.routes.draw do
     delete 'sign_out', action: :destroy
   end
 
+  controller :otp_enrolments do
+    get  "otp/enable",               action: :new,       as: "otp_enrolment"
+    post "otp/enable/send_code",     action: :send_code, as: "otp_enrolment_send_code"
+    get  "otp/enable/verify",        action: :verify,    as: "otp_enrolment_verify"
+    post "otp/enable/verify",        action: :create,    as: "otp_enrolment_verify_create"
+
+    # A settings page linking to new_otp_enrolment_path for device users
+    # new_otp_enrolment
+    # get 'otp/enrol', to: '?', as: 'new_otp_enrolment'
+
+  end
+
+  controller :otp_sessions do
+    get  "otp/sign_in",      action: :new,       as: "otp_sign_in"
+    post "otp/send_code",    action: :send_code, as: "otp_send_code"
+    get  "otp/verify",       action: :verify,    as: "otp_verify"
+    post "otp/verify",       action: :create,    as: "otp_verify_create"
+  end
+
+  controller :static_pages do
+    get 'about',   action: :about
+  end
+
   root "static_pages#home"
+
 end

@@ -7,12 +7,26 @@ class ApplicationController < ActionController::Base
   private
 
   def load_current_user
-    token = cookies.encrypted[:device_token]
-    return unless token
+    # token = cookies.encrypted[:device_token]
+    # return unless token
+    #
+    # if (user = User.find_by(device_token: token))
+    #   Current.user = user
+    # end
 
-    if (user = User.find_by(device_token: token))
+    if (session_record = Session.find_by_id(cookies.signed[:session_token]))
+      Current.session = session_record
+      Current.user = session_record.user
+      # elsif (user = User.find_by(device_token: cookies.encrypted[:device_token]))
+    elsif (token = cookies.encrypted[:device_token]).present? &&
+        (user = User.find_by(device_token: token))
       Current.user = user
     end
+
+    Rails.logger.debug "Current.user: #{Current.user.inspect}"
+    Rails.logger.debug "Current.session: #{Current.session.inspect}"
+    Rails.logger.debug "session_token cookie: #{cookies.signed[:session_token].inspect}"
+
   end
 
   def authenticate_user!

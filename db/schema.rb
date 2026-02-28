@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_16_202609) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_27_140340) do
+  create_table "sessions", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
   create_table "todos", force: :cascade do |t|
     t.boolean "completed"
     t.datetime "created_at", null: false
@@ -21,8 +28,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_16_202609) do
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.string "device_token", null: false
+    t.string "device_token"
+    t.string "email"
+    t.boolean "otp_enabled", default: false, null: false
+    t.string "otp_secret"
     t.datetime "updated_at", null: false
     t.index ["device_token"], name: "index_users_on_device_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
+
+  add_foreign_key "sessions", "users"
 end

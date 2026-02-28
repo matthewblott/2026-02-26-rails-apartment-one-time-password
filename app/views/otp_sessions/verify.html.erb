@@ -1,0 +1,7 @@
+<form action="<%= otp_verify_create_path %>" accept-charset="utf-8" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="email" name="email" placeholder="alice@example.com" value="<%= params[:email] %>" required>
+  <input type="number" name="otp_code" placeholder="123456" required>
+  <button>send otp</button>
+</form>
+
