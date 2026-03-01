@@ -1,4 +1,4 @@
-class OtpEnrolmentsController < ApplicationController
+class OtpEnrolmentsController < OtpBaseController
   skip_before_action :authorize_user!
 
   def send_code
@@ -9,15 +9,7 @@ class OtpEnrolmentsController < ApplicationController
       render :new, status: :unprocessable_entity and return
     end
 
-    otp_secret = ROTP::Base32.random_base32
-    otp = ROTP::TOTP.new(otp_secret, issuer: "MyApp")
-    otp_code = otp.now
-
-    session[:otp_secret] = otp_secret
-    session[:email] = email
-
-    UserMailer.with(email:, otp_code:).send_otp.deliver_now
-
+    generate_and_send_otp(email)
     redirect_to otp_enrolment_verify_path
   end
 
@@ -34,9 +26,7 @@ class OtpEnrolmentsController < ApplicationController
       redirect_to otp_enrolment_path and return
     end
 
-    otp = ROTP::TOTP.new(otp_secret, issuer: "MyApp")
-
-    unless otp.verify(params[:otp_code], drift_behind: 30)
+    unless verify_otp_code(otp_secret, params[:otp_code])
       flash.now[:alert] = "Invalid or expired code."
       @email = email
       render :verify, status: :unprocessable_entity and return
@@ -53,18 +43,11 @@ class OtpEnrolmentsController < ApplicationController
     session.delete(:email)
 
     new_session = Current.user.sessions.create!
-
     cookies.delete(:device_token)
-
-    cookies.signed.permanent[:session_token] = {
-      value: new_session.id,
-      httponly: true,
-      secure: Rails.env.production?,
-      same_site: :lax
-    }
-
+    set_session_cookie(new_session)
     Current.session = new_session
 
     redirect_to user_todos_path(Current.user), notice: "OTP enabled. You can now sign in from any device."
   end
+
 end
