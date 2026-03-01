@@ -19,6 +19,13 @@ Rails.application.routes.draw do
 
   end
 
+  controller :registrations do
+    get  "register",        action: :new,       as: "new_registration"
+    post "register/send",   action: :send_code, as: "registration_send_code"
+    get  "register/verify", action: :verify,    as: "registration_verify"
+    post "register/verify", action: :create,    as: "registration_verify_create"
+  end
+
   controller :sessions do
     post 'sign_in', action: :create
     delete 'sign_out', action: :destroy

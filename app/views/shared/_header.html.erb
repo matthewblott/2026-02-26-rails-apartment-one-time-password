@@ -14,13 +14,6 @@
 
       <button type="submit" form="sign_out_form">Sign out</button>
 
-    <% else %>
-
-      <form action="/sign_in" method="post" id="sign_in_form">
-        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      </form>
-
-      <button type="submit" form="sign_in_form">Sign in</button>
     <% end %>
 
   </div>

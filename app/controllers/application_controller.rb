@@ -15,9 +15,9 @@ class ApplicationController < ActionController::Base
       Current.user = user
     end
 
-    Rails.logger.debug "Current.user: #{Current.user.inspect}"
-    Rails.logger.debug "Current.session: #{Current.session.inspect}"
-    Rails.logger.debug "session_token cookie: #{cookies.signed[:session_token].inspect}"
+    # Rails.logger.debug "Current.user: #{Current.user.inspect}"
+    # Rails.logger.debug "Current.session: #{Current.session.inspect}"
+    # Rails.logger.debug "session_token cookie: #{cookies.signed[:session_token].inspect}"
 
   end
 
