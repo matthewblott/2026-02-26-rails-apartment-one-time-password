@@ -1,4 +1,4 @@
-class OtpBaseController < ApplicationController
+class EmailAuthController < ApplicationController
   private
 
   def generate_and_send_otp(email)
@@ -11,6 +11,12 @@ class OtpBaseController < ApplicationController
     UserMailer.with(email:, otp_code:).send_otp.deliver_now
 
     otp_secret
+  end
+
+  def send_otp(user)
+    otp_code = user.otp.now
+    session[:email] = user.email
+    UserMailer.with(email: user.email, otp_code:).send_otp.deliver_now
   end
 
   def verify_otp_code(otp_secret, code)

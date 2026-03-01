@@ -1,4 +1,4 @@
-class RegistrationsController < OtpBaseController
+class RegistrationsController < EmailAuthController 
   skip_before_action :authenticate_user!
   skip_before_action :authorize_user!
 
@@ -11,12 +11,12 @@ class RegistrationsController < OtpBaseController
     end
 
     generate_and_send_otp(email)
-    redirect_to registration_verify_path
+    redirect_to registration_verify_code_path
   end
 
   def verify
     @email = session[:email]
-    redirect_to new_registration_path if @email.blank?
+    redirect_to registration_path if @email.blank?
   end
 
   def create
@@ -24,7 +24,7 @@ class RegistrationsController < OtpBaseController
     email = session[:email]
 
     if otp_secret.blank? || email.blank?
-      redirect_to new_registration_path and return
+      redirect_to registration_path and return
     end
 
     unless verify_otp_code(otp_secret, params[:otp_code])

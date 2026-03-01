@@ -3,14 +3,14 @@
 
 <% unless is_signed_in? %>
 
-  <form action="/sign_in" method="post" id="sign_in_form">
+  <form action="<%= guest_session_create_path %>" method="post" id="sign_in_form">
     <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   </form>
 
 
-  <a href="<%= new_registration_path %>">Register</a> | 
+  <a href="<%= registration_path %>">Register</a> | 
 
-  <a href="<%= otp_sign_in_path %>">Sign in</a> | 
+  <a href="<%= session_path %>">Sign in</a> | 
 
   <button form="sign_in_form" class="link">Continue as guest</button>
 

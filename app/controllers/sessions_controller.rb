@@ -1,21 +1,42 @@
-class SessionsController < ApplicationController
-  skip_before_action :authenticate_user!, only: :create
+class SessionsController < EmailAuthController
+  skip_before_action :load_current_user, only: %i[new send_code verify create]
+  skip_before_action :authenticate_user!, only: %i[new send_code verify create]
+  skip_before_action :authorize_user!, only: %i[new send_code verify create]
+
+  def send_code
+    email = params[:email]
+    user = User.find_by(email: email, otp_enabled: true)
+    
+    if user.blank?
+      flash.now[:alert] = "No OTP account found for that email."
+      render :new, status: :unprocessable_entity and return
+    end
+
+    # generate_and_send_otp(email)
+    send_otp(user)
+
+    redirect_to session_verify_code_path
+  end
+
+  def verify
+    @email = session[:email]
+    redirect_to session_path if @email.blank?
+  end
 
   def create
-    return redirect_to user_todos_path(Current.user) if Current.user
+    email = session[:email]
+    user = User.find_by(email: email, otp_enabled: true)
 
-    user = User.create!
-
-    cookies.permanent.encrypted[:device_token] = {
-      value: user.device_token,
-      httponly: true,
-      secure: Rails.env.production?,
-      same_site: :lax
-    }
-
-    Current.user = user
-
-    redirect_to user_todos_path(Current.user)
+    if user&.valid_otp?(params[:otp_code])
+      new_session = user.sessions.create!
+      session.delete(:email)
+      set_session_cookie(new_session)
+      redirect_to user_todos_path(user)
+    else
+      flash.now[:alert] = "Invalid or expired code."
+      @email = email
+      render :verify, status: :unprocessable_entity
+    end
   end
 
   def destroy
@@ -31,13 +52,6 @@ class SessionsController < ApplicationController
     end
 
     redirect_to root_path
-
-  end
-
-  private
-
-  def require_user
-    redirect_to root_path unless Current.user
   end
 
 end

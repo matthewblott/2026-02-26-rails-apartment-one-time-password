@@ -14,11 +14,6 @@ class ApplicationController < ActionController::Base
         (user = User.find_by(device_token: token))
       Current.user = user
     end
-
-    # Rails.logger.debug "Current.user: #{Current.user.inspect}"
-    # Rails.logger.debug "Current.session: #{Current.session.inspect}"
-    # Rails.logger.debug "session_token cookie: #{cookies.signed[:session_token].inspect}"
-
   end
 
   def authenticate_user!

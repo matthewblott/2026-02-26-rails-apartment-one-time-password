@@ -1,6 +1,6 @@
 <% content_for :title, "Sign up" %>
 
-<form action="<%= otp_enrolment_send_code_path %>" accept-charset="utf-8" method="post">
+<form action="<%= security_send_code_path %>" accept-charset="utf-8" method="post">
   <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
   <input type="email" name="email" placeholder="alice@example.com" required>
   <button>send otp</button>

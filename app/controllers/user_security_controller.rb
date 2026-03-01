@@ -1,4 +1,4 @@
-class OtpEnrolmentsController < OtpBaseController
+class UserSecurityController < EmailAuthController 
   skip_before_action :authorize_user!
 
   def send_code
@@ -10,12 +10,12 @@ class OtpEnrolmentsController < OtpBaseController
     end
 
     generate_and_send_otp(email)
-    redirect_to otp_enrolment_verify_path
+    redirect_to security_verify_code_path
   end
 
   def verify
     @email = session[:email]
-    redirect_to otp_enrolment_path if @email.blank?
+    redirect_to security_path if @email.blank?
   end
 
   def create
@@ -23,7 +23,7 @@ class OtpEnrolmentsController < OtpBaseController
     email = session[:email]
 
     if otp_secret.blank? || email.blank?
-      redirect_to otp_enrolment_path and return
+      redirect_to security_path and return
     end
 
     unless verify_otp_code(otp_secret, params[:otp_code])
