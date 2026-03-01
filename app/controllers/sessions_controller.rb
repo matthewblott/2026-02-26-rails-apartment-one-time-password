@@ -1,9 +1,7 @@
 class SessionsController < ApplicationController
-  # before_action :require_user, only: :destroy
   skip_before_action :authenticate_user!, only: :create
 
   def create
-    # return redirect_to root_path if Current.user
     return redirect_to user_todos_path(Current.user) if Current.user
 
     user = User.create!
@@ -21,20 +19,11 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    # Apartment::Tenant.drop(Current.user.id.to_s)
-    # Current.user&.destroy
-    # cookies.delete(:device_token)
-
     if Current.user.otp_user?
-      # Current.session&.destroy
-      # Current.user = nil
-      # cookies.delete(:session_token)
-
       session_id = cookies.signed[:session_token]
       Session.find_by(id: session_id)&.destroy
       cookies.delete(:session_token)
       cookies.delete(:device_token)
-
     else
       Apartment::Tenant.drop(Current.user.id.to_s)
       Current.user.destroy

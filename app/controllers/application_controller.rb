@@ -7,17 +7,9 @@ class ApplicationController < ActionController::Base
   private
 
   def load_current_user
-    # token = cookies.encrypted[:device_token]
-    # return unless token
-    #
-    # if (user = User.find_by(device_token: token))
-    #   Current.user = user
-    # end
-
     if (session_record = Session.find_by_id(cookies.signed[:session_token]))
       Current.session = session_record
       Current.user = session_record.user
-      # elsif (user = User.find_by(device_token: cookies.encrypted[:device_token]))
     elsif (token = cookies.encrypted[:device_token]).present? &&
         (user = User.find_by(device_token: token))
       Current.user = user
