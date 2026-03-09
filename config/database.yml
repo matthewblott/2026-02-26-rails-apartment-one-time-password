@@ -6,17 +6,17 @@ default: &default
 development:
   primary:
     <<: *default
-    database: storage/tenant.sqlite3
-    migrations_paths: db/migrate_tenant
+    database: storage/<%= Rails.env %>/tenant.sqlite3
+    migrations_paths: db/migrate/tenant
 
 # rails db:migrate:primary
     
-  shared:
+  auth:
     <<: *default
-    database: storage/shared.sqlite3
-    migrations_paths: db/migrate_shared
+    database: storage/<%= Rails.env %>/auth.sqlite3
+    migrations_paths: db/migrate/auth
 
 # For the shared database to create a migration file run the following
-# rails generate migration CreateFoo --database=shared
+# rails generate migration CreateFoo --database=auth
 #
-# rails db:migrate:shared
+# rails db:migrate:auth
