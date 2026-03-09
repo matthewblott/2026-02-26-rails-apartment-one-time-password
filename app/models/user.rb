@@ -1,4 +1,4 @@
-class User < ApplicationRecord
+class User < SharedRecord 
   has_many :sessions, dependent: :destroy
 
   before_validation :generate_device_token, on: :create

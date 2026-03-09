@@ -4,14 +4,19 @@ default: &default
   timeout: 5000
 
 development:
-  <<: *default
-  database: storage/development.sqlite3
+  primary:
+    <<: *default
+    database: storage/tenant.sqlite3
+    migrations_paths: db/migrate_tenant
 
-test:
-  <<: *default
-  database: storage/test.sqlite3
+# rails db:migrate:primary
+    
+  shared:
+    <<: *default
+    database: storage/shared.sqlite3
+    migrations_paths: db/migrate_shared
 
-production:
-  <<: *default
-  database: storage/production.sqlite3
-
+# For the shared database to create a migration file run the following
+# rails generate migration CreateFoo --database=shared
+#
+# rails db:migrate:shared
