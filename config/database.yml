@@ -9,6 +9,9 @@ development:
     database: storage/<%= Rails.env %>/tenant.sqlite3
     migrations_paths: db/migrate/tenant
 
+# For the shared database to create a migration file run the following
+# rails generate migration CreateFoo --database=primary
+#
 # rails db:migrate:primary
     
   auth:
