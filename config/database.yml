@@ -4,15 +4,15 @@ default: &default
   timeout: 5000
 
 development:
-  primary:
+  tenant:
     <<: *default
     database: storage/<%= Rails.env %>/tenant.sqlite3
     migrations_paths: db/migrate/tenant
 
 # For the shared database to create a migration file run the following
-# rails generate migration CreateFoo --database=primary
+# rails generate migration CreateFoo --database=tenant
 #
-# rails db:migrate:primary
+# rails db:migrate:tenant
     
   auth:
     <<: *default
