@@ -4,15 +4,7 @@ default: &default
   timeout: 5000
 
 development:
-  # For the shared database to create a migration file run the following
-  # rails generate migration CreateFoo --database=auth
-  #
-  # rails db:migrate:auth
-    
-  auth:
-    <<: *default
-    database: storage/<%= Rails.env %>/auth.sqlite3
-    migrations_paths: db/migrate/auth
+  # tenant needs to be the first listed in this file!
 
   # For the shared database to create a migration file run the following
   # rails generate migration CreateFoo --database=tenant
@@ -23,3 +15,14 @@ development:
     <<: *default
     database: storage/<%= Rails.env %>/tenant.sqlite3
     migrations_paths: db/migrate/tenant
+
+
+  # For the shared database to create a migration file run the following
+  # rails generate migration CreateFoo --database=auth
+  #
+  # rails db:migrate:auth
+    
+  auth:
+    <<: *default
+    database: storage/<%= Rails.env %>/auth.sqlite3
+    migrations_paths: db/migrate/auth
