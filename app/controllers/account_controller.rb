@@ -1,7 +1,4 @@
 class AccountController < EmailAuthController
-  # skip_before_action :load_current_user, only: %i[new send_code verify create]
-  # skip_before_action :authenticate_user!, only: %i[new send_code verify create]
-  # skip_before_action :authorize_user!, only: %i[new send_code verify create]
 
   def index
   end
