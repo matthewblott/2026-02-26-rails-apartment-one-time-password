@@ -14,8 +14,19 @@ Rails.application.routes.draw do
     end
 
     controller :settings do
-      get "settings", action: :show, as: :settings
+      get "settings", action: :index, as: :settings
     end
+    
+    controller :account do
+      get "account", action: :index, as: :account
+
+      get  "account/new",        action: :new,       as: :new_account
+      post "account/send",       action: :send_code, as: :account_send_code
+      get  "account/verify",     action: :verify,    as: :account_verify_code
+      post "account/verify",     action: :create,    as: :account_create
+
+    end
+
   end
 
   controller :registrations do

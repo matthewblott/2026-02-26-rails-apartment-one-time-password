@@ -1,0 +1,10 @@
+<% content_for :title, "Account" %>
+
+<% content_for :header_controls do %>
+  <a href="<%= user_todos_path %>">Todos</a> 
+<% end %>
+
+<div>
+  <a href="<%= user_new_account_path %>" class="button">Add email address</a>
+</div>
+

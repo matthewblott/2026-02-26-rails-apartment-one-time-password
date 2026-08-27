@@ -2,6 +2,10 @@
 
 <% content_for :title, "Todos" %>
 
+<% content_for :header_controls do %>
+  <a href="<%= user_account_path %>">Account</a>
+<% end %>
+
 <div id="todos">
   <% @todos.each do |todo| %>
     <%= render todo %>
