@@ -22,22 +22,6 @@ class AccountController < EmailAuthController
   end
 
   def create
-    # email = session[:email]
-    # user = User.find_by(email: email, otp_enabled: true)
-    #
-    # if user&.valid_otp?(params[:otp_code])
-    #
-    #   new_session = user.sessions.create!
-    #
-    #   session.delete(:email)
-    #   set_session_cookie(new_session)
-    #   redirect_to user_todos_path(user)
-    # else
-    #   flash.now[:alert] = "Invalid or expired code."
-    #   @email = email
-    #   render :verify, status: :unprocessable_entity
-    # end
-
     otp_secret = session[:otp_secret]
     email = session[:email]
 
@@ -46,12 +30,6 @@ class AccountController < EmailAuthController
       @email = email
       render :verify, status: :unprocessable_entity and return
     end
-
-    # user = User.create!(
-    #   email: email,
-    #   otp_secret: otp_secret,
-    #   otp_enabled: true
-    # )
 
     Current.user.update!(email: email, otp_secret: otp_secret, otp_enabled: true)
 

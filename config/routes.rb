@@ -13,13 +13,12 @@ Rails.application.routes.draw do
       delete "todos/:id",      action: :destroy,          as: :todo_destroy
     end
 
-    controller :settings do
-      get "settings", action: :index, as: :settings
-    end
+    # controller :settings do
+    #   get "settings", action: :index, as: :settings
+    # end
     
     controller :account do
       get "account", action: :index, as: :account
-
       get  "account/new",        action: :new,       as: :new_account
       post "account/send",       action: :send_code, as: :account_send_code
       get  "account/verify",     action: :verify,    as: :account_verify_code
@@ -29,23 +28,32 @@ Rails.application.routes.draw do
 
   end
 
-  controller :registrations do
-    get  "register",        action: :new,       as: :registration
-    post "register/send",   action: :send_code, as: :registration_send_code
-    get  "register/verify", action: :verify,    as: :registration_verify_code
-    post "register/verify", action: :create,    as: :registration_create
+
+  controller :auth do
+    get  "auth",            action: :new,       as: :auth
+    post "auth/send",       action: :send_code, as: :auth_send_code
+    get  "auth/verify",     action: :verify,    as: :auth_verify_code
+    post "auth/verify",     action: :create,    as: :auth_create
+    delete "auth/sign_out", action: :destroy,   as: :auth_destroy
   end
+
+  # controller :registrations do
+  #   get  "register",        action: :new,       as: :registration
+  #   post "register/send",   action: :send_code, as: :registration_send_code
+  #   get  "register/verify", action: :verify,    as: :registration_verify_code
+  #   post "register/verify", action: :create,    as: :registration_create
+  # end
 
   controller :guest_sessions do
     post   "session/guest",  action: :create,   as: :guest_session_create
   end
 
-  controller :user_security do
-    get  "security",        action: :new,       as: :security
-    post "security/send",   action: :send_code, as: :security_send_code
-    get  "security/verify", action: :verify,    as: :security_verify_code
-    post "security/verify", action: :create,    as: :security_create
-  end
+  # controller :user_security do
+  #   get  "security",        action: :new,       as: :security
+  #   post "security/send",   action: :send_code, as: :security_send_code
+  #   get  "security/verify", action: :verify,    as: :security_verify_code
+  #   post "security/verify", action: :create,    as: :security_create
+  # end
 
   controller :sessions do
     get  "session",            action: :new,       as: :session
