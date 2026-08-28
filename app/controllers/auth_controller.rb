@@ -24,10 +24,10 @@ class AuthController < EmailAuthController
     redirect_to auth_verify_code_path
   end
 
-  def verify
-    @email = session[:email]
-    redirect_to sign_in_path if @email.blank?
-  end
+  # def verify
+  #   @email = session[:email]
+  #   redirect_to sign_in_path if @email.blank?
+  # end
 
   def create
     email = session[:email]
@@ -57,6 +57,21 @@ class AuthController < EmailAuthController
 
     notice = is_new_user ? "Account created. You can now sign in from any device." : nil
     redirect_to user_todos_path(user), notice: notice
+  end
+
+  def destroy
+    if Current.user.otp_user?
+      session_id = cookies.signed[:session_token]
+      Session.find_by(id: session_id)&.destroy
+      cookies.delete(:session_token)
+      cookies.delete(:device_token)
+    else
+      Apartment::Tenant.drop(Current.user.id.to_s)
+      Current.user.destroy
+      cookies.delete(:device_token)
+    end
+
+    redirect_to root_path
   end
 
   def redirect_if_authenticated

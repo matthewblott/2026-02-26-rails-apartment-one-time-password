@@ -13,10 +13,6 @@ Rails.application.routes.draw do
       delete "todos/:id",      action: :destroy,          as: :todo_destroy
     end
 
-    # controller :settings do
-    #   get "settings", action: :index, as: :settings
-    # end
-    
     controller :account do
       get "account", action: :index, as: :account
       get  "account/new",        action: :new,       as: :new_account
@@ -28,7 +24,6 @@ Rails.application.routes.draw do
 
   end
 
-
   controller :auth do
     get  "auth",            action: :new,       as: :auth
     post "auth/send",       action: :send_code, as: :auth_send_code
@@ -37,30 +32,8 @@ Rails.application.routes.draw do
     delete "auth/sign_out", action: :destroy,   as: :auth_destroy
   end
 
-  # controller :registrations do
-  #   get  "register",        action: :new,       as: :registration
-  #   post "register/send",   action: :send_code, as: :registration_send_code
-  #   get  "register/verify", action: :verify,    as: :registration_verify_code
-  #   post "register/verify", action: :create,    as: :registration_create
-  # end
-
   controller :guest_sessions do
     post   "session/guest",  action: :create,   as: :guest_session_create
-  end
-
-  # controller :user_security do
-  #   get  "security",        action: :new,       as: :security
-  #   post "security/send",   action: :send_code, as: :security_send_code
-  #   get  "security/verify", action: :verify,    as: :security_verify_code
-  #   post "security/verify", action: :create,    as: :security_create
-  # end
-
-  controller :sessions do
-    get  "session",            action: :new,       as: :session
-    post "session/send",       action: :send_code, as: :session_send_code
-    get  "session/verify",     action: :verify,    as: :session_verify_code
-    post "session/verify",     action: :create,    as: :session_create
-    delete "session/sign_out", action: :destroy,   as: :session_destroy
   end
 
   controller :static_pages do
