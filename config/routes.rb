@@ -19,7 +19,6 @@ Rails.application.routes.draw do
       post "account/send",       action: :send_code, as: :account_send_code
       get  "account/verify",     action: :verify,    as: :account_verify_code
       post "account/verify",     action: :create,    as: :account_create
-
     end
 
   end

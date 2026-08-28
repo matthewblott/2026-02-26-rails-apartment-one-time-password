@@ -1,6 +1,5 @@
 class AuthController < EmailAuthController
   skip_before_action :authenticate_user!
-  # before_action :redirect_if_authenticated
 
   def new
   end
@@ -23,11 +22,6 @@ class AuthController < EmailAuthController
 
     redirect_to auth_verify_code_path
   end
-
-  # def verify
-  #   @email = session[:email]
-  #   redirect_to sign_in_path if @email.blank?
-  # end
 
   def create
     email = session[:email]
@@ -72,9 +66,5 @@ class AuthController < EmailAuthController
     end
 
     redirect_to root_path
-  end
-
-  def redirect_if_authenticated
-    redirect_to user_todos_path(Current.user) if Current.user
   end
 end
