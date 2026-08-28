@@ -1,6 +1,6 @@
 class AuthController < EmailAuthController
   skip_before_action :authenticate_user!
-  before_action :redirect_if_authenticated
+  # before_action :redirect_if_authenticated
 
   def new
   end
