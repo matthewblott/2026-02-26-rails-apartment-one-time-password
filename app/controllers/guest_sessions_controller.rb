@@ -2,7 +2,9 @@ class GuestSessionsController < ApplicationController
   skip_before_action :authenticate_user!, only: :create
 
   def create
-    return redirect_to user_todos_path(Current.user) if Current.user
+    if Current.user
+      return redirect_to user_home_path(Current.user)
+    end
 
     user = User.create!
 
@@ -15,7 +17,7 @@ class GuestSessionsController < ApplicationController
 
     Current.user = user
 
-    redirect_to user_todos_path(Current.user)
+    redirect_to user_home_path(Current.user)
   end
 
 end

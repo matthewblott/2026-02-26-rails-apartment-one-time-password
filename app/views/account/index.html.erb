@@ -1,10 +1,35 @@
 <% content_for :title, "Account" %>
 
+<style>
+  p {
+    text-align: center;
+  }
+</style>
+
 <% content_for :header_controls do %>
-  <a href="<%= user_todos_path %>">Todos</a> 
+  <div role="group">
+    <a href="<%= user_home_path %>" role="button">Home</a>
+  </div>
 <% end %>
 
-<div>
-  <a href="<%= user_new_account_path %>" class="button">Add email address</a>
-</div>
+<% if is_guest_user? %>
 
+  <p>
+    Add an email address and you can sign in on other devices. 
+  </p>
+
+  <a href="<%= user_new_account_path %>" role="button" class="outline">Add email address</a>
+
+<% else %>
+
+  <p>
+    Sign out from your account here.
+  </p>
+  <a href="<%= user_confirm_account_sign_out_path %>" role="button" class="outline">Sign Out</a>
+
+<% end %>
+
+<p>
+  Delete your account here.
+</p>
+<a href="<%= user_confirm_account_delete_path %>" role="button" class="outline danger">Delete Account</a>

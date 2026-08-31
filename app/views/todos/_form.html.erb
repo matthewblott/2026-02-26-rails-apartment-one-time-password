@@ -1,32 +1,94 @@
-<%= form_with(model: [Current.user, todo]) do |form| %>
-  <% if todo.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(todo.errors.count, "error") %> prohibited this todo from being saved:</h2>
+<style>
+  legend {
+    span {
+      margin-left: 0.5rem;
+    }
+    margin-bottom: 0.25rem;
+  }
+  label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
-      <ul>
-        <% todo.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+    span {
+      margin-left: 0.5rem;
+    }
+    input, textarea {
+      margin-top: 0.5rem;
+    }
+    input[type="checkbox"] {
+      cursor: pointer;
+      appearance: none;
+      width: 1.25rem;
+      height: 1.25rem;
+      margin: 0;
+      margin-top: 0.4rem;
+      margin-left: 0.5rem;
+      border: 1px solid #999;
+      border-radius: 0.25rem;
+      background: white;
+      cursor: pointer;
+    }
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
+    input[type="checkbox"]:checked {
+      background: #333;
+    }
 
-  <div>
-    <%= form.label :details, style: "display: block" %>
-    <%= form.textarea :details %>
-  </div>
+    input[type="checkbox"]:checked::after {
+      content: "";
+      display: block;
+      width: 0.35rem;
+      height: 0.65rem;
+      margin: 0.15rem 0 0 0.4rem;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
 
-  <div>
-    <%= form.label :completed, style: "display: block" %>
-    <%= form.checkbox :completed %>
-  </div>
+  }
+  
+  textarea {
+    padding: 0.5rem 1rem;
+    border: 0.05rem solid darkgray;
+    width: 100%;
+    border-radius: var(--border-radius-pill);
+    cursor: pointer;
+  }
 
-  <div>
-    <%= form.submit %>
+</style>
+
+<% if todo.errors.any? %>
+  <div style="color: red">
+    <h2><%= pluralize(todo.errors.count, "error") %> prohibited this todo from being saved:</h2>
+
+    <ul>
+      <% todo.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+    </ul>
   </div>
 <% end %>
+
+<form method="post" id="todo_form">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+  <fieldset>
+    <label>
+      <span>Title</span>
+      <input
+        name="todo[title]"
+        placeholder="Buy groceries"
+        value="<%= todo.title %>"
+      >
+    </label>
+    <label>
+      <span>Details</span>
+      <textarea name="todo[details]" class="autosize" class="pill"><%= todo.details %></textarea>
+    </label>
+    <label>
+      <span>Completed</span>
+      <input type="checkbox" name="todo[completed]" <%= todo.completed ? "checked" : "" %>>
+      <input type="hidden" name="todo[completed]" value="0">
+    </label>
+  </fieldset>
+</form>

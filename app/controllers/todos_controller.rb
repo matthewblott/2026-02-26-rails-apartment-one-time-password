@@ -1,5 +1,5 @@
 class TodosController < ApplicationController
-  before_action :set_todo, only: %i[ show edit update destroy ]
+  before_action :set_todo, only: %i[ edit update destroy ]
 
   def index
     @todos = Todo.all
@@ -13,7 +13,7 @@ class TodosController < ApplicationController
     @todo = Todo.new(todo_params)
 
     if @todo.save
-      redirect_to user_todo_path(Current.user, @todo), notice: "Todo was successfully created."
+      redirect_to user_todos_path(Current.user), notice: "Todo was successfully created."
     else
       render :new, status: :unprocessable_content
     end
@@ -21,7 +21,7 @@ class TodosController < ApplicationController
 
   def update
     if @todo.update(todo_params)
-      redirect_to user_todo_path(Current.user, @todo), notice: "Todo was successfully updated.", status: :see_other
+      redirect_to user_todos_path(Current.user), notice: "Todo was successfully updated.", status: :see_other
     else
       render :edit, status: :unprocessable_content
     end

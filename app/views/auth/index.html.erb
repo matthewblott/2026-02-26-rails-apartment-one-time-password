@@ -1,0 +1,24 @@
+<% content_for :title, "Skribl" %>
+
+<style>
+  p {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+</style>
+
+<form action="<%= guest_session_create_path %>" method="post" id="sign_in_form">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+</form>
+
+<p>
+  Keep your todos synced <br>and backed up.
+</p>
+<a href="<%= new_auth_path %>" class="outline" role="button">Sign in</a>
+
+<p>
+  Get started right away — <br>no account required.
+</p>
+<button form="sign_in_form" class="outline">Continue as guest</button>

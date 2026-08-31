@@ -15,3 +15,4 @@ class EmailAuthController < ApplicationController
   end
 
 end
+

@@ -1,6 +1,9 @@
 class AuthController < EmailAuthController
   skip_before_action :authenticate_user!
 
+  def index
+  end
+
   def new
   end
 
@@ -50,21 +53,7 @@ class AuthController < EmailAuthController
     Current.user = user
 
     notice = is_new_user ? "Account created. You can now sign in from any device." : nil
-    redirect_to user_todos_path(user), notice: notice
+    redirect_to user_home_path(user), notice: notice
   end
 
-  def destroy
-    if Current.user.otp_user?
-      session_id = cookies.signed[:session_token]
-      Session.find_by(id: session_id)&.destroy
-      cookies.delete(:session_token)
-      cookies.delete(:device_token)
-    else
-      Apartment::Tenant.drop(Current.user.id.to_s)
-      Current.user.destroy
-      cookies.delete(:device_token)
-    end
-
-    redirect_to root_path
-  end
 end

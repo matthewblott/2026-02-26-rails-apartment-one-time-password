@@ -1,0 +1,35 @@
+body {
+  header {
+    gap: 0.5rem;
+    padding-bottom: var(--spacing-vertical);
+  }
+
+  main {
+    gap: 1rem;
+
+    fieldset {
+      gap: 1rem;
+    }
+  }
+}
+
+.mt-m {
+  margin-top: 0.5rem;
+}
+
+.mt-l {
+  margin-top: 1rem;
+}
+
+.mt-xl {
+  margin-top: 2rem;
+}
+
+.mt-xxl {
+  margin-top: 4rem;
+}
+
+.pr-xl {
+  padding-right: 2rem;
+}
+

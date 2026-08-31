@@ -1,0 +1,17 @@
+<% content_for :title, "Sign Out" %>
+
+<% content_for :header_controls do %>
+  <div role="group">
+    <a href="<%= user_account_path %>" role="button">Account</a>
+  </div>
+<% end %>
+
+<% if is_signed_in? %>
+<% end %>
+
+<form action="<%= user_account_sign_out_path %>" method="post" id="sign_out_form">
+  <input type="hidden" name="_method" value="delete">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+</form>
+
+<button type="submit" form="sign_out_form" class="outline">Sign out</button>

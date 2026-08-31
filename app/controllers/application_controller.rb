@@ -18,14 +18,14 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user!
     return if Current.user
-    redirect_to root_path
+    redirect_to user_home_path
   end
 
   def authorize_user!
     return unless params[:user_id].present?
     
     unless Current.user.id == params[:user_id].to_i
-      redirect_to root_path, alert: "Not authorised."
+      redirect_to home_path, alert: "Not authorised."
     end
   end
 

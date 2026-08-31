@@ -7,4 +7,8 @@ module ApplicationHelper
     !Current.user.nil? 
   end
 
+  def is_guest_user?
+    !Current.user.otp_user?
+  end
+
 end

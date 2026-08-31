@@ -6,6 +6,5 @@ class CreateTodos < ActiveRecord::Migration[8.1]
       t.boolean :completed
       t.timestamps
     end
-
   end
 end

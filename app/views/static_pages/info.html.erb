@@ -1,0 +1,27 @@
+<% content_for :title, "Information" %>
+
+<p>
+  Unless You choose to create an account, Your records are stored securely and are accessible only from this device.
+</p>
+<p>
+  If You delete the app or clear its data, Your records cannot be recovered.
+</p>
+<p>
+  By continuing, you agree to our
+  <a href="<%= terms_path %>">Terms and Conditions</a> and
+  <a href="<%= privacy_path %>">Privacy Policy</a>.
+</p>
+
+<a href="<%= auth_path %>" role="button" class="outline">Continue</a>
+
+<style>
+  a {
+    color: blue;
+  }
+
+  p {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+  }
+</style>

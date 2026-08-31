@@ -1,0 +1,26 @@
+<% content_for :title, "Delete Account" %>
+
+<style>
+  p {
+    text-align: center;
+  }
+</style>
+
+<% content_for :header_controls do %>
+  <div role="group">
+    <a href="<%= user_account_path %>" role="button">Account</a>
+  </div>
+<% end %>
+
+<% if is_signed_in? %>
+<% end %>
+
+<form action="<%= user_account_destroy_path %>" method="post" id="delete_account_form">
+  <input type="hidden" name="_method" value="delete">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+</form>
+
+<p>This process cannot be undone. Are you sure you want to delete your account?</p>
+
+<button type="submit" form="delete_account_form" class="outline danger">Delete Account</button>
+

@@ -1,6 +1,4 @@
 class AccountController < EmailAuthController
-  before_action :require_guest
-
   def index
   end
 
@@ -26,7 +24,7 @@ class AccountController < EmailAuthController
     redirect_to user_account_verify_code_path
   end
 
-  def create
+  def verify_code
     email = session[:email]
     otp_secret = session[:otp_secret]
 
@@ -53,12 +51,21 @@ class AccountController < EmailAuthController
     session.delete(:otp_secret)
     session.delete(:email)
 
-    redirect_to user_todos_path(Current.user), notice: "Email added — you can now sign in from any device."
+    redirect_to user_home_path(Current.user), notice: "Email added — you can now sign in from any device."
   end
 
-  private
-
-  def require_guest
-    redirect_to root_path unless Current.user && !Current.user.otp_user?
+  def sign_out 
+    session_id = cookies.signed[:session_token]
+    Session.find_by(id: session_id)&.destroy
+    cookies.delete(:session_token)
+    cookies.delete(:device_token)
+    redirect_to root_path
   end
+  
+  def destroy
+    Current.user.destroy
+    cookies.delete(:device_token)
+    redirect_to root_path
+  end
+
 end

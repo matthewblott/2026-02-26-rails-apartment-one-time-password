@@ -1,0 +1,10 @@
+<% content_for :title, "Home" %>
+
+<% unless is_signed_in? %>
+<% end %>
+
+<script>
+  setTimeout(() => {
+    window.location.replace('<%= info_path %>');
+  }, 1000) 
+</script>

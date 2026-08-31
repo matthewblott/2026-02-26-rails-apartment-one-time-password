@@ -1,18 +1,60 @@
 <p style="color: green"><%= notice %></p>
 
+<style>
+  article {
+    a {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 2rem;
+      align-items: center;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        h2 {
+          color: color-mix(in srgb, var(--color-primary), black 30%);
+          font-size: xx-large;
+        }
+        h3 {
+          font-size: large;
+          color: grey;
+        }
+      }
+    }
+  }
+  p {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+</style>
+
 <% content_for :title, "Todos" %>
 
 <% content_for :header_controls do %>
-  <a href="<%= user_account_path %>">Account</a>
+  <div role="group">
+    <a href="<%= user_home_path %>" role="button">Home</a>
+    <a href="<%= user_new_todo_path %>" role="button">New</a>
+  </div>
 <% end %>
 
-<div id="todos">
-  <% @todos.each do |todo| %>
-    <%= render todo %>
-    <p>
-      <%= link_to "Show this todo",  user_todo_path(Current.user, todo) %>
-    </p>
-  <% end %>
-</div>
+<% if @todos.empty? %>
+  <p>
+    You haven't created any todos yet.
+  </p>
 
-<%= link_to "New todo", user_new_todo_path %>
+<% end %>
+
+
+<% @todos.each do |todo| %>
+  <article class="pill">
+    <h2>
+      <%= link_to todo.title,  user_todo_path(Current.user, todo) %>
+    </h2>
+    <h3><%= todo.details %></h3>
+  </article>
+
+<% end %>

@@ -1,23 +1,11 @@
-<header>
-  <h1>
-    <%= page_title %>
-  </h1>
+<h1>
+  <%= page_title %>
+</h1>
 
-  <div>
+<div>
 
-    <% if is_signed_in? %>
+  <% if is_signed_in? %>
+    <%= yield :header_controls %>
+  <% end %>
 
-      <form action="<%= auth_destroy_path %>" method="post" id="sign_out_form">
-        <input type="hidden" name="_method" value="delete">
-        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
-      </form>
-
-      <button type="submit" form="sign_out_form">Sign out</button>
-
-      <%= yield :header_controls %>
-
-    <% end %>
-
-  </div>
-
-</header>
+</div>

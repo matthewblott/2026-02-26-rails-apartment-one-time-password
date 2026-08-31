@@ -1,0 +1,21 @@
+<% content_for :title, "Skribl" %>
+
+<style>
+  p {
+    text-align: center;
+  }
+</style>
+
+<% content_for :header_controls do %>
+  <div role="group">
+    <a href="<%= user_account_path %>" role="button">Account</a> 
+  </div>
+<% end %>
+
+
+<p>
+  Proceed to your todos.
+</p>
+<a href="<%= user_todos_path %>" role="button" class="outline">Todos</a>
+
+

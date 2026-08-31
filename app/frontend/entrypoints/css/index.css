@@ -1,0 +1,9 @@
+@layer
+  core
+, components
+, utilities
+;
+
+@import url('./core/_index.css') layer(core);
+@import url('./components/_index.css') layer(components);
+@import url('./utilities/_index.css') layer(utilities);
