@@ -87,8 +87,8 @@
     </label>
     <label>
       <span>Completed</span>
-      <input type="checkbox" name="todo[completed]" <%= todo.completed ? "checked" : "" %>>
       <input type="hidden" name="todo[completed]" value="0">
+      <input type="checkbox" name="todo[completed]" value="1" <%= todo.completed ? "checked" : "" %>>
     </label>
   </fieldset>
 </form>
