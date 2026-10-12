@@ -11,11 +11,6 @@ Install the correct libraries:
 bundle insall
 ```
 
-Vite is used for the front end. Bun is also used although you can swap that for npm or whatever tool you wish:
-```
-bun install
-```
-
 Run the migrations for the authentication database:
 ```
 rails db:migrate:auth
@@ -28,7 +23,7 @@ Run the migrations for the tenant Todos database:
 rails db:migrate:primary
 ```
 
-Run both Vite and the Rails server with the following command:
+Run the Rails server with the following command:
 ```
-bun dev
+rails server
 ```
