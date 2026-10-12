@@ -1,6 +1,6 @@
 module ApplicationHelper
   def page_title
-    content_for(:title || 'Skribl')
+    content_for(:title || 'Todos')
   end
 
   def is_signed_in?
