@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'faker', '~> 3.5'
 gem 'importmap-rails', '~> 2.2'
 gem 'propshaft', '~> 1.3'
 gem 'pagy', '~> 43.6'

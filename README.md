@@ -27,3 +27,9 @@ Run the Rails server with the following command:
 ```
 rails server
 ```
+
+The tenant database is created when a user signs in. If you want to seed the database for records run the following after:
+```
+rails db:seed
+```
+Note that the above action iterates all tenant databases.
