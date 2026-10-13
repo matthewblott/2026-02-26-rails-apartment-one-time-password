@@ -2,8 +2,26 @@ article {
   padding: 0.5rem;
   display: flex;
   border-radius: 0.5rem;
-  /* box-shadow: var(--shadow);  */
-
   border: 0.1rem solid var(--color-border);
 
+  a {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2rem;
+    align-items: center;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      h2 {
+        color: color-mix(in srgb, var(--color-primary), black 30%);
+        font-size: xx-large;
+      }
+      h3 {
+        font-size: large;
+        color: grey;
+      }
+    }
+  }
 }

@@ -1,8 +1,13 @@
 class TodosController < ApplicationController
+  include Pagy::Method
   before_action :set_todo, only: %i[ edit update destroy ]
 
   def index
-    @todos = Todo.all
+    @pagy, @todos = pagy(Todo.recent_first, items: 20)
+
+    if turbo_frame_request?
+      render partial: 'todos/frame', locals: { view_models: @todos, pagy: @pagy }
+    end
   end
 
   def new
@@ -13,7 +18,7 @@ class TodosController < ApplicationController
     @todo = Todo.new(todo_params)
 
     if @todo.save
-      redirect_to user_todos_path(Current.user), notice: "Todo was successfully created."
+      redirect_to user_todos_path(Current.user), notice: 'Todo was successfully created.'
     else
       render :new, status: :unprocessable_content
     end
@@ -21,7 +26,7 @@ class TodosController < ApplicationController
 
   def update
     if @todo.update(todo_params)
-      redirect_to user_todos_path(Current.user), notice: "Todo was successfully updated.", status: :see_other
+      redirect_to user_todos_path(Current.user), notice: 'Todo was successfully updated.', status: :see_other
     else
       render :edit, status: :unprocessable_content
     end
@@ -29,7 +34,7 @@ class TodosController < ApplicationController
 
   def destroy
     @todo.destroy!
-    redirect_to user_todos_path(Current.user), notice: "Todo was successfully destroyed.", status: :see_other
+    redirect_to user_todos_path(Current.user), notice: 'Todo was successfully destroyed.', status: :see_other
   end
 
   private

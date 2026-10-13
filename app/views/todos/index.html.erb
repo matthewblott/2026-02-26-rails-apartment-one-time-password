@@ -1,38 +1,15 @@
 <p style="color: green"><%= notice %></p>
 
 <style>
-  article {
-    a {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 2rem;
-      align-items: center;
-
-      div {
-        display: flex;
-        flex-direction: column;
-        h2 {
-          color: color-mix(in srgb, var(--color-primary), black 30%);
-          font-size: xx-large;
-        }
-        h3 {
-          font-size: large;
-          color: grey;
-        }
-      }
-    }
-  }
   p {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
     font-size: 1.2rem;
     text-align: center;
   }
-
 </style>
 
-<% content_for :title, "Todos" %>
+<% content_for :title, 'Todos' %>
 
 <% content_for :header_controls do %>
   <div role="group">
@@ -41,20 +18,16 @@
   </div>
 <% end %>
 
-<% if @todos.empty? %>
-  <p>
-    You haven't created any todos yet.
-  </p>
+<section id="todos_element">
+  <% @todos.each do |todo| %>
+    <%= render partial: 'todos/todo', locals: { todo: todo } %>
+  <% end %>
 
-<% end %>
-
-
-<% @todos.each do |todo| %>
-  <article class="pill">
-    <h2>
-      <%= link_to todo.title,  user_todo_path(Current.user, todo) %>
-    </h2>
-    <h3><%= todo.details %></h3>
-  </article>
-
-<% end %>
+  <% if @pagy.next %>
+    <%= turbo_frame_tag "pagination_#{@pagy.next}", 
+        src: user_todos_path(page: @pagy.next),
+        loading: "lazy" do %>
+      Loading more...
+    <% end %>
+  <% end %>
+</section>

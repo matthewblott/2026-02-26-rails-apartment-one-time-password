@@ -1,0 +1,12 @@
+<%= turbo_frame_tag "pagination_#{pagy.page}" do %>
+  <% view_models.each do |todo| %>
+    <%= render partial: 'todos/todo', locals: { todo: todo } %>
+  <% end %>
+  <% if pagy.next %>
+    <%= turbo_frame_tag "pagination_#{pagy.next}",
+        src: user_todos_path(page: pagy.next),
+        loading: "lazy" do %>
+      Loading more...
+    <% end %>
+  <% end %>
+<% end %>

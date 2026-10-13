@@ -1,0 +1,6 @@
+<article class="pill">
+  <h2>
+    <%= link_to todo.title,  user_todo_path(Current.user, todo) %>
+  </h2>
+  <h3><%= todo.details %></h3>
+</article>
