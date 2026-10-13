@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   scope '/:user_id', constraints: { user_id: /\d+/ }, as: :user do
     controller :home do
-      get '', action: :index, as: :home
+      get 'home', action: :index, as: :home
     end
 
     controller :todos do

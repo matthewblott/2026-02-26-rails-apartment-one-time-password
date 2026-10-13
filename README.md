@@ -23,13 +23,14 @@ Run the migrations for the tenant Todos database:
 rails db:migrate:primary
 ```
 
+To create a test user with records run the following:
+```
+rails db:seed
+```
+This creates the user `jane@example.com` with an OTP code of `123456`.
+
 Run the Rails server with the following command:
 ```
 rails server
 ```
 
-The tenant database is created when a user signs in. If you want to seed the database for records run the following after:
-```
-rails db:seed
-```
-Note that the above action iterates all tenant databases.
